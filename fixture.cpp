@@ -127,8 +127,9 @@ int contadorlineas(string mifichero)
     return contador_de_lineas;
 }
 
-void llenadomatriz(float matriz[][n1],float n,lista l)
+void llenadomatriz(float **matriz,lista l,int n)
 {
+
 	lista p,a;
 	p=l;
 	a=l;
@@ -162,8 +163,12 @@ void llenadomatriz(float matriz[][n1],float n,lista l)
 				matriz[i][j]=calcularDistancia(latitud1,latitud2,longitud1,longitud2);
 			}
 			p=p->link;
+			if(p->link == NULL)
+				p=l;
 		}
 		a = a->link;
+		if(a->link == NULL)
+			a=l;
 	}
 	
 }
@@ -172,21 +177,29 @@ void llenadomatriz(float matriz[][n1],float n,lista l)
 int main()
 {
 	 lista l;
-	 float numero_de_equipos;
+	 int numero_de_equipos;
 	 numero_de_equipos=contadorlineas("datos");
 	 guardar("datos",l);
 	 float matrizequipos[numero_de_equipos][numero_de_equipos];
 	 mostrar(l);
-	 llenadomatriz(matrizequipos,numero_de_equipos,l);
+	 cout << endl;
+
+	//puntero de punteros para problema de envio de matriz con tamaño dinamico
+	float *array[numero_de_equipos];
+	for(size_t w=0;w<numero_de_equipos; w++){
+		array[w]=matrizequipos[w];
+	}
+
+
+	 llenadomatriz(array,l,numero_de_equipos);
 	 for(int i = 0; i<numero_de_equipos;i++)
 	 {
 	 	cout<<endl;
 	 	for(int j = 0; j<numero_de_equipos;j++)
 	 	{
-	 		cout<<matrizequipos[i][j]<<",";
+	 		cout<<matrizequipos[i][j]<<"-";
 	 	}
 	 }
 
-	 cout<<numero_de_equipos;
-	 
+	 //cout<<numero_de_equipos;
 }
