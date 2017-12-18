@@ -2,7 +2,6 @@
 #include <fstream>
 #include <string>
 #include  <cmath>
-#define PI 3.141592654 
 using namespace std;
 #include <sstream>
 using std::stringstream;
@@ -96,23 +95,26 @@ float enRadianes(float valor)
 	valor= valor* (PI/180);
 	return valor;
 }
-float calcularDistancia(float latitud1,float latitud2,float longitud1,float longitud2)
-{
-	//Formula Haversine --> Radio ecuatorial = 6378km
-	int R = 6378;
-	float diferencialat,aux1;
-	float diferencialong,aux2;
-	float distancia;
-	float a,c;
-	aux1= latitud2 - latitud1;
-	aux2 = longitud2-longitud1;
-	diferencialat = enRadianes(aux1);
-	diferencialong= enRadianes(aux2);
-	a = pow(sin(diferencialat/2),2)+ cos(enRadianes(latitud1)* cos(enRadianes(latitud2))*pow(sin(diferencialong/2),2));
-	c= 2 * atan2(sqrt(a),sqrt(1-a));
-	distancia = R * c;
+double calcularDistancia(double lat1,double lat2,double long1,double long2){       
+        double PI = 4.0*atan(1.0);
+        
+        //Formula Haversine --> Radio ecuatorial = 6378km
+        double dlat1=lat1*(PI/180);
 
-	return distancia;
+        double dlong1=long1*(PI/180);
+        double dlat2=lat2*(PI/180);
+        double dlong2=long2*(PI/180);
+
+        double dLong=dlong1-dlong2;
+        double dLat=dlat1-dlat2;
+
+        double aHarv= pow(sin(dLat/2.0),2.0)+cos(dlat1)*cos(dlat2)*pow(sin(dLong/2),2);
+        double cHarv=2*atan2(sqrt(aHarv),sqrt(1.0-aHarv));
+ 
+        const double earth=6378;
+        double distancia=earth*cHarv;
+
+        return distancia;
 }
 
 int contadorlineas(string mifichero)
