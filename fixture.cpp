@@ -90,11 +90,7 @@ void guardar(string fichero,lista &l)
    }
 } 
 
-float enRadianes(float valor)
-{
-	valor= valor* (PI/180);
-	return valor;
-}
+
 double calcularDistancia(double lat1,double lat2,double long1,double long2){       
         double PI = 4.0*atan(1.0);
         

@@ -15,7 +15,7 @@ using std::getline;
 using std::stringstream;
 
 using namespace std;
-struct nodo
+typedef struct nodo
 {
 	int num_equipos;
 	string nombre_equipo;
@@ -33,7 +33,7 @@ void mostrar(lista l)//se puede modificar esta funcion para recorrer la lista ta
 	while(p!=NULL)
 	{	
 		
-		cout<<"numero de equipo "<<p->num_equipos<<endl;
+		cout<<"numero de equipo "<<p->num_equipos+1<<endl;
 		cout<<"nombre de equipo "<<p->nombre_equipo<<endl;
 		cout<<"nombre de estadio "<<p->nombre_estadio<<endl;
 		cout<<"latitud "<<p->latitud<<endl;
@@ -43,13 +43,13 @@ void mostrar(lista l)//se puede modificar esta funcion para recorrer la lista ta
 	}
 }
 
-int main()
+void guardar(string fichero)
 {	lista l;
 	lista p;
 	l=NULL;
 	int contador;
 	contador=0;
-   ifstream is("datos.cvs");
+   ifstream is(fichero +".cvs");
    
    if (is){
       string linea;
@@ -91,8 +91,4 @@ int main()
       
       is.close();
    }
-
-	mostrar(l);
-   
-   return 0;
 }
