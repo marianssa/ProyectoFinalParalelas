@@ -14,36 +14,35 @@ using std::getline;
 #include <sstream>
 using std::stringstream;
 #include  <cmath>
-#define PI 3.141592654 
 
 using namespace std;
 
 float enRadianes(float valor)
 {
-	valor= valor* 180/PI;
+	double PI = 4.0*atan(1.0);
+	valor= valor* (PI/180);
 	return valor;
 }
-float calcularDistancia(float latitud1,float latitud2, float longitud1,float longitud2)
-{
-	//Formula Haversine --> Radio ecuatorial = 6378km
-	int R = 6378;
-	float distancia;
-	float diferencialat,aux1;
-	float diferencialong,aux2;
-	float a,c;
-	aux1= latitud2 - latitud1;
-	aux2 = longitud2-longitud1;
-	diferencialat = enRadianes(aux1);
-	diferencialong= enRadianes(aux2);
-	/*a = pow(sin(diferencialat/2),2)+ cos(enRadianes(latitud1)* cos(enRadianes(latitud2))*pow(sin(diferencialong/2),2));
-	c= 2 * atan2(sqrt(a),sqrt(1-a));*/
-	c=2*R;
-	a=asin(sqrt((pow(sin(enRadianes(diferencialat/2)),2))+((cos(enRadianes(latitud1)))*(cos(enRadianes(latitud2)))*(pow(sin(enRadianes(diferencialong/2)),2)))));//encontre esta otra forma de hacerla..pero tampoco arroja bien los resultados
-	//distancia = R * c;
-	distancia=c*a;
-	cout<<"el valor es "<<distancia<<endl;
+double calcularDistancia(double lat1,double lat2,double long1,double long2){       
+        double PI = 4.0*atan(1.0);
+        
+        //Formula Haversine --> Radio ecuatorial = 6378km
+        double dlat1=lat1*(PI/180);
 
-	return distancia;
+        double dlong1=long1*(PI/180);
+        double dlat2=lat2*(PI/180);
+        double dlong2=long2*(PI/180);
+
+        double dLong=dlong1-dlong2;
+        double dLat=dlat1-dlat2;
+
+        double aHarv= pow(sin(dLat/2.0),2.0)+cos(dlat1)*cos(dlat2)*pow(sin(dLong/2),2);
+        double cHarv=2*atan2(sqrt(aHarv),sqrt(1.0-aHarv));
+ 
+        const double earth=6378;
+        double distancia=earth*cHarv;
+
+        return distancia;
 }
 
 typedef struct nodo
@@ -51,8 +50,8 @@ typedef struct nodo
 	int num_equipos;
 	string nombre_equipo;
 	string nombre_estadio;
-	float latitud;
-	float longitud;
+	double latitud;
+	double longitud;
 	struct nodo*link;
 };
 typedef nodo*lista;
@@ -105,7 +104,7 @@ int main()
 
          
          // Obtenemos la longitud y descartamos el ';'
-         float aux3;
+         double aux3;
          ss>>aux3;
          p->latitud=aux3;
          // Descartamos el caracter ';' a continuacion del dato
@@ -113,7 +112,7 @@ int main()
          ss >> ch;
          
          // Obtenemos la longitud, esta es el resto de la linea
-         float aux4;
+         double aux4;
          ss>>aux4;
          p->longitud=aux4;
 	 p->link=l;
