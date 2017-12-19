@@ -16,6 +16,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QTreeView>
 
 QT_BEGIN_NAMESPACE
@@ -25,6 +26,7 @@ class Ui_Dialog1
 public:
     QDialogButtonBox *buttonBox;
     QTreeView *treeView;
+    QPushButton *btnabrircarpeta;
 
     void setupUi(QDialog *Dialog1)
     {
@@ -33,12 +35,15 @@ public:
         Dialog1->resize(400, 300);
         buttonBox = new QDialogButtonBox(Dialog1);
         buttonBox->setObjectName(QStringLiteral("buttonBox"));
-        buttonBox->setGeometry(QRect(30, 240, 341, 32));
+        buttonBox->setGeometry(QRect(40, 260, 341, 32));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         treeView = new QTreeView(Dialog1);
         treeView->setObjectName(QStringLiteral("treeView"));
-        treeView->setGeometry(QRect(30, 30, 321, 201));
+        treeView->setGeometry(QRect(30, 20, 321, 201));
+        btnabrircarpeta = new QPushButton(Dialog1);
+        btnabrircarpeta->setObjectName(QStringLiteral("btnabrircarpeta"));
+        btnabrircarpeta->setGeometry(QRect(150, 230, 80, 22));
 
         retranslateUi(Dialog1);
         QObject::connect(buttonBox, SIGNAL(accepted()), Dialog1, SLOT(accept()));
@@ -50,6 +55,7 @@ public:
     void retranslateUi(QDialog *Dialog1)
     {
         Dialog1->setWindowTitle(QApplication::translate("Dialog1", "Dialog", 0));
+        btnabrircarpeta->setText(QApplication::translate("Dialog1", "Abrir", 0));
     } // retranslateUi
 
 };

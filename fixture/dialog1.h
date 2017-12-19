@@ -1,9 +1,9 @@
 #ifndef DIALOG1_H
 #define DIALOG1_H
-#include <QDebug>
 #include <QDialog>
-#include <QtGui>
-#include <QtCore>
+#include <QDirModel>
+#include <QTreeView>
+#include <QInputDialog>
 #include <dialog1.h>
 
 namespace Ui {
@@ -18,8 +18,15 @@ public:
     explicit Dialog1(QWidget *parent = 0);
     ~Dialog1();
 
+private slots:
+
+
+
+    void on_btnabrircarpeta_clicked();
+
 private:
     Ui::Dialog1 *ui;
+    QDirModel *model;
 };
 
 #endif // DIALOG1_H
