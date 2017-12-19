@@ -132,45 +132,30 @@ int contadorlineas(string mifichero)
 void llenadomatriz(float **matriz,lista l,int n)
 {
 
-	lista p,a;
-	p=l;
-	a=l;
+	lista t,q;
+	t=l;
 
 	float latitud1,
 		  latitud2,
 		  longitud1,
 		  longitud2;
 
-	for(int i = 0; i<n;i++)
+	while(t!=NULL)
 	{
-		if(a->num_equipos == i)
+		q=l;
+		while(q!=NULL)
 		{
-			latitud1 = a->latitud;
-			longitud1 = a->longitud;
-		}
-		for(int j = 0; j<n;j++)
-		{
-			if(i==j)
-
-				matriz[i][j]=0;	
-
-			if(matriz[j][i]!=0)
-
-                    matriz[i][j]=matriz[j][i];
-
-			if(p->num_equipos == j)
+			if(t->num_equipos==q->num_equipos)
 			{
-				latitud2 = p->latitud;
-				longitud2 = p->longitud;
-				matriz[i][j]=calcularDistancia(latitud1,latitud2,longitud1,longitud2);
+				matriz[t->num_equipos][q->num_equipos]=0;
 			}
-			p=p->link;
-			if(p->link == NULL)
-				p=l;
+			else
+			{
+				matriz[t->num_equipos][q->num_equipos]= calcularDistancia(t->latitud,q->latitud,t->longitud,q->longitud);
+			}
+		q=q->link;
 		}
-		a = a->link;
-		if(a->link == NULL)
-			a=l;
+	t=t->link;
 	}
 	
 }
