@@ -3,14 +3,15 @@
 using namespace std;
 
 main(){
-	int distancias_original[6][6];//matriz de distancias original, que no cambia
-	int distancias[6][6];//matriz de distancias, cambia con los calculos de fechas
+	int n=6;// cambiar 6 por numero_equipos------------------------------0000000000000000000000000000000000000000
+	int distancias_original[n][n];//matriz de distancias original, que no cambia
+	int distancias[n][n];//matriz de distancias, cambia con los calculos de fechas
 
 	//llenar con 0
-	for(int i = 0; i<6;i++)
+	for(int i = 0; i<n;i++)
 	{
 	 	cout<<endl;
-	 	for(int j = 0; j<6;j++)
+	 	for(int j = 0; j<n;j++)
 	 	{
 	 		distancias_original[i][j]=0;
 	 		distancias[i][j]=0;
@@ -32,9 +33,9 @@ main(){
 	distancias_original[3][5]=4;
 	distancias_original[4][5]=6;
 	//termina llenado matriz
-	for(int i = 0; i<6;i++)
+	for(int i = 0; i<n;i++)
 	{
-	 	for(int j = 0; j<6;j++)
+	 	for(int j = 0; j<n;j++)
 	 	{
 	 		if(i!=j)
 	 			if (distancias_original[j][i]!=0)
@@ -49,13 +50,13 @@ main(){
 
 
 	//mostrar matriz
-	for(int i = 0; i<6;i++)
+	for(int i = 0; i<n;i++)
 	{
 	 	cout<<endl;
-	 	for(int j = 0; j<6;j++)
+	 	for(int j = 0; j<n;j++)
 	 	{
 	 		cout<<distancias[i][j];
-	 		if(j<6-1)
+	 		if(j<n-1)
 	 			cout<<" - ";
 	 	}
 	 	cout<< endl;
@@ -64,18 +65,18 @@ main(){
 
 
 	//desplazamientos
-	int disponibilidad[6];//para ver si puede viajar en la fecha o si ya lo hizo-- valores de 0 o 1
-	for(int i=0; i<6; i++){
+	int disponibilidad[n];//para ver si puede viajar en la fecha o si ya lo hizo-- valores de 0 o 1
+	for(int i=0; i<n; i++){
 		disponibilidad[i]=1;
 	}
 
 	int posicion_actual[6];//para saber posicion actual de equipo; cambia
-	for(int i=0; i<6; i++){//cada equipo en su estadio inicialmente
+	for(int i=0; i<n; i++){//cada equipo en su estadio inicialmente
 		posicion_actual[i]=i+1;//---- guarda valores desde 1 (no el 0)
 	}
 
-	int posicion_original[6];//para guardar posicion en donde estaba antes de fecha---------------------------------
-	for(int i=0; i<6; i++){//cada equipo en su estadio inicialmente
+	int posicion_original[n];//para guardar posicion en donde estaba antes de fecha---------------------------------
+	for(int i=0; i<n; i++){//cada equipo en su estadio inicialmente
 		posicion_original[i]=i+1;//---- guarda valores desde 1 (no el 0)
 	}
 
@@ -87,12 +88,12 @@ main(){
 	int numero_fecha=0;//variable para imprimir numero de fecha correspondiente
 	int numero_f=0;//aux para variable numero_fecha
 
-	for(int m=0; m<2*(6 -1); m++)//for para repetir cosas hasta completar fechas= 2*(numero_equipos - 1)
+	for(int m=0; m<2*(n -1)+1; m++)//for para repetir cosas hasta completar fechas= 2*(numero_equipos - 1),  +1 para asegurar todos los partidos
 	{
-		for(int z=0; z< 3; z++)//se repite hasta completar una fecha; numero_equipos/2  por fecha -----------------------------------cambiar 3 por numero_equipos/2
+		for(int z=0; z< n/2; z++)//se repite hasta completar una fecha; numero_equipos/2  por fecha
 		{	
-			for(int i=0; i<6; i++){//recorrer matriz distancia para encontrar menor
-				for(int j=0; j<6; j++){
+			for(int i=0; i<n; i++){//recorrer matriz distancia para encontrar menor
+				for(int j=0; j<n; j++){
 					if(i!=j){
 						if(distancias[j][i]>0)
 						{
@@ -113,27 +114,27 @@ main(){
 			
 			posicion_actual[columna]=fila+1;//asigna posicion del visitante por la del local	
 			cout<< "Posiciones : ";//------------------------------------------------------------------------------------------
-			for(int i=0; i<6; i++)
+			for(int i=0; i<n; i++)
 				cout <<" c"<<i+1<<"= "<<posicion_actual[i];
 			cout<<endl;
 
 			disponibilidad[fila]=0; //declara indisponible a este equipo para poder viajar o recibir visita
 			disponibilidad[columna]=0; //declara indisponible a este equipo para poder viajar o recibir visita
 			cout<< "Disponibilidad : ";//--------------------------------------------------------------------------------------
-			for(int i=0; i<6; i++)
+			for(int i=0; i<n; i++)
 				cout <<" c"<<i+1<<"= "<<disponibilidad[i];
 			cout<<endl;
 
 
 			distancias[columna][fila]=-1;
 			//mostrar matriz
-			for(int i = 0; i<6;i++)
+			for(int i = 0; i<n;i++)
 			{
 			 	cout<<endl;
-			 	for(int j = 0; j<6;j++)
+			 	for(int j = 0; j<n;j++)
 			 	{
 			 		cout<<distancias[i][j];
-			 		if(j<6-1)
+			 		if(j<n-1)
 			 			cout<<" - ";
 			 	}
 			 	cout<< endl;
@@ -141,7 +142,7 @@ main(){
 			min=999999999;//reset de min para poder volver a buscar un nuevo minimo
 		}
 		//Termina 1 fecha
-		for(int i=0; i<6; i++)//todos disponibles otra vez para poder viajar o recibir visitas 
+		for(int i=0; i<n; i++)//todos disponibles otra vez para poder viajar o recibir visitas 
 		{
 			disponibilidad[i]=1;
 		}
@@ -149,7 +150,7 @@ main(){
 		//fechas
 		numero_f=numero_fecha;
 		cout<<"Fecha: "<<numero_f+1<<endl;
-		for(int k=0;k<6;k++){// imprime la cantidad de veces que hay por fecha; --------------------- cambiar 6 por numero_equipos
+		for(int k=0;k<n;k++){// imprime la cantidad de veces que hay por fecha; --------------------- 
 			if(posicion_actual[k]!=posicion_original[k])
 			{
 				cout<<"Local: "<< posicion_actual[k] <<" - Visitante: "<< k+1 <<endl;
@@ -158,15 +159,15 @@ main(){
 		numero_fecha++;
 
 		cout<<"Posiciones finales por fecha: ";
-		for(int h=0; h<6; h++){//asigna posicion actual como la siguiente posicion original
+		for(int h=0; h<n; h++){//asigna posicion actual como la siguiente posicion original
 			posicion_original[h]=posicion_actual[h];//---- guarda valores desde 1 (no el 0)
 			cout<< posicion_actual[h]<<", ";
 		}
 
 
-		for(int i=0; i<6; i++)
+		for(int i=0; i<n; i++)
 		{
-			for(int j=0; j<6; j++)
+			for(int j=0; j<n; j++)
 			{
 				if(i!=j)
 				{
@@ -180,13 +181,13 @@ main(){
 		}
 
 		//mostrar matriz
-		for(int i = 0; i<6;i++)
+		for(int i = 0; i<n;i++)
 		{
 			cout<<endl;
-			for(int j = 0; j<6;j++)
+			for(int j = 0; j<n;j++)
 			{
 				cout<<distancias[i][j];
-				if(j<6-1)
+				if(j<n-1)
 					cout<<" - ";
 			}
 			cout<< endl;
