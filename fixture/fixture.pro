@@ -14,10 +14,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    dialog1.cpp
+    ventanaerror.cpp \
+    ventanaok.cpp
 
 HEADERS  += mainwindow.h \
-    dialog1.h
+    ventanaerror.h \
+    ventanaok.h
 
 FORMS    += mainwindow.ui \
-    dialog1.ui
+    ventanaerror.ui \
+    ventanaok.ui
+
+RESOURCES += \
+    imagen1.qrc \
+    imagen.qrc \
+    imagen2.qrc
+
+DISTFILES += \
+    ../../ok.png

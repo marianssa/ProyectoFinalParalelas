@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -37,8 +38,10 @@ public:
     QLabel *label_7;
     QGroupBox *groupBox_2;
     QPushButton *btnsubir;
+    QTreeView *treeView_2;
     QGroupBox *groupBox_3;
     QPushButton *btnelegir;
+    QTreeView *treeView;
     QPushButton *btncerrar;
     QStatusBar *statusBar;
 
@@ -46,13 +49,13 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(633, 363);
+        MainWindow->resize(633, 464);
         MainWindow->setAutoFillBackground(false);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(380, 20, 231, 261));
+        groupBox->setGeometry(QRect(370, 30, 231, 321));
         groupBox->setAlignment(Qt::AlignCenter);
         label = new QLabel(groupBox);
         label->setObjectName(QStringLiteral("label"));
@@ -87,19 +90,25 @@ public:
         label_7->setGeometry(QRect(20, 240, 161, 16));
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(20, 20, 271, 101));
+        groupBox_2->setGeometry(QRect(20, 10, 281, 161));
         btnsubir = new QPushButton(groupBox_2);
         btnsubir->setObjectName(QStringLiteral("btnsubir"));
-        btnsubir->setGeometry(QRect(90, 40, 80, 22));
+        btnsubir->setGeometry(QRect(90, 130, 80, 22));
+        treeView_2 = new QTreeView(groupBox_2);
+        treeView_2->setObjectName(QStringLiteral("treeView_2"));
+        treeView_2->setGeometry(QRect(20, 30, 231, 91));
         groupBox_3 = new QGroupBox(centralWidget);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(20, 160, 271, 121));
+        groupBox_3->setGeometry(QRect(20, 180, 281, 171));
         btnelegir = new QPushButton(groupBox_3);
         btnelegir->setObjectName(QStringLiteral("btnelegir"));
-        btnelegir->setGeometry(QRect(90, 90, 80, 22));
+        btnelegir->setGeometry(QRect(90, 140, 80, 22));
+        treeView = new QTreeView(groupBox_3);
+        treeView->setObjectName(QStringLiteral("treeView"));
+        treeView->setGeometry(QRect(20, 30, 241, 91));
         btncerrar = new QPushButton(centralWidget);
         btncerrar->setObjectName(QStringLiteral("btncerrar"));
-        btncerrar->setGeometry(QRect(290, 290, 80, 22));
+        btncerrar->setGeometry(QRect(280, 390, 80, 22));
         MainWindow->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QStringLiteral("statusBar"));

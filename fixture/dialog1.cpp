@@ -33,9 +33,7 @@ Dialog1::~Dialog1()
 
 
 
-
-
-void Dialog1::on_btnabrircarpeta_clicked()
+void Dialog1::on_treeView_activated(const QModelIndex &)
 {
     QModelIndex index = ui->treeView->currentIndex();
         if(!index.isValid()) return;
@@ -44,5 +42,5 @@ void Dialog1::on_btnabrircarpeta_clicked()
 
         if(name.isEmpty()) return;
 
-        model->mkdir(index, name);
+
 }

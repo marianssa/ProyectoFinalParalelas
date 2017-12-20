@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>futbol.png</file>
+    </qresource>
+</RCC>

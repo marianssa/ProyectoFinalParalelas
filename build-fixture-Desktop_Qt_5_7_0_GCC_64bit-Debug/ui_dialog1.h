@@ -16,7 +16,7 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QHeaderView>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QTreeView>
 
 QT_BEGIN_NAMESPACE
@@ -26,7 +26,7 @@ class Ui_Dialog1
 public:
     QDialogButtonBox *buttonBox;
     QTreeView *treeView;
-    QPushButton *btnabrircarpeta;
+    QLabel *label;
 
     void setupUi(QDialog *Dialog1)
     {
@@ -40,10 +40,10 @@ public:
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         treeView = new QTreeView(Dialog1);
         treeView->setObjectName(QStringLiteral("treeView"));
-        treeView->setGeometry(QRect(30, 20, 321, 201));
-        btnabrircarpeta = new QPushButton(Dialog1);
-        btnabrircarpeta->setObjectName(QStringLiteral("btnabrircarpeta"));
-        btnabrircarpeta->setGeometry(QRect(150, 230, 80, 22));
+        treeView->setGeometry(QRect(40, 30, 321, 201));
+        label = new QLabel(Dialog1);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(40, 10, 351, 16));
 
         retranslateUi(Dialog1);
         QObject::connect(buttonBox, SIGNAL(accepted()), Dialog1, SLOT(accept()));
@@ -55,7 +55,7 @@ public:
     void retranslateUi(QDialog *Dialog1)
     {
         Dialog1->setWindowTitle(QApplication::translate("Dialog1", "Dialog", 0));
-        btnabrircarpeta->setText(QApplication::translate("Dialog1", "Abrir", 0));
+        label->setText(QApplication::translate("Dialog1", "Escoga el archivo :", 0));
     } // retranslateUi
 
 };

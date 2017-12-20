@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>633</width>
-    <height>363</height>
+    <height>464</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,10 +20,10 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>20</y>
+      <x>360</x>
+      <y>10</y>
       <width>231</width>
-      <height>261</height>
+      <height>341</height>
      </rect>
     </property>
     <property name="title">
@@ -158,9 +158,9 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
-      <width>271</width>
-      <height>101</height>
+      <y>10</y>
+      <width>281</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
@@ -170,7 +170,7 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>40</y>
+       <y>130</y>
        <width>80</width>
        <height>22</height>
       </rect>
@@ -179,14 +179,24 @@
       <string>Subir</string>
      </property>
     </widget>
+    <widget class="QTreeView" name="treeView_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>231</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_3">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>160</y>
-      <width>271</width>
-      <height>121</height>
+      <y>180</y>
+      <width>281</width>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
@@ -196,7 +206,7 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>90</y>
+       <y>140</y>
        <width>80</width>
        <height>22</height>
       </rect>
@@ -205,12 +215,22 @@
       <string>Elegir</string>
      </property>
     </widget>
+    <widget class="QTreeView" name="treeView">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>241</width>
+       <height>91</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="btncerrar">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>290</y>
+      <x>280</x>
+      <y>390</y>
       <width>80</width>
       <height>22</height>
      </rect>
@@ -219,11 +239,32 @@
      <string>Cerrar</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>360</y>
+      <width>81</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="imagen2.qrc">:/futbol.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="imagen2.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>btncerrar</sender>

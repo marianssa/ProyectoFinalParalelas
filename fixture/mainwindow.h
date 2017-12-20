@@ -1,8 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <QDialog>
+#include <QDirModel>
+#include <QTreeView>
+#include <QInputDialog>
 #include <QMainWindow>
-#include <dialog1.h>
+
 
 namespace Ui {
 class MainWindow;
@@ -19,9 +22,15 @@ public:
 private slots:
     void on_btnsubir_clicked();
 
+    void on_treeView_2_activated(const QModelIndex &index);
+
+    void on_treeView_activated(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
-    Dialog1 ventana;
+     QDirModel *model;
+     QDirModel *model2;
+    // Dialog1 ventana;
 };
 
 #endif // MAINWINDOW_H

@@ -21,8 +21,7 @@ public:
 private slots:
 
 
-
-    void on_btnabrircarpeta_clicked();
+    void on_treeView_activated(const QModelIndex &index);
 
 private:
     Ui::Dialog1 *ui;
