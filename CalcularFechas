@@ -3,15 +3,15 @@
 using namespace std;
 
 main(){
-	int n=6;// cambiar 6 por numero_equipos------------------------------0000000000000000000000000000000000000000
-	int distancias_original[n][n];//matriz de distancias original, que no cambia
-	int distancias[n][n];//matriz de distancias, cambia con los calculos de fechas
+	int numero_equipos=6;// cambiar 6 por numero_equipos------------------------------0000000000000000000000000000000000000000
+	int distancias_original[numero_equipos][numero_equipos];//matriz de distancias original, que no cambia
+	int distancias[numero_equipos][numero_equipos];//matriz de distancias, cambia con los calculos de fechas
 
 	//llenar con 0
-	for(int i = 0; i<n;i++)
+	for(int i = 0; i<numero_equipos;i++)
 	{
 	 	cout<<endl;
-	 	for(int j = 0; j<n;j++)
+	 	for(int j = 0; j<numero_equipos;j++)
 	 	{
 	 		distancias_original[i][j]=0;
 	 		distancias[i][j]=0;
@@ -33,9 +33,9 @@ main(){
 	distancias_original[3][5]=4;
 	distancias_original[4][5]=6;
 	//termina llenado matriz
-	for(int i = 0; i<n;i++)
+	for(int i = 0; i<numero_equipos;i++)
 	{
-	 	for(int j = 0; j<n;j++)
+	 	for(int j = 0; j<numero_equipos;j++)
 	 	{
 	 		if(i!=j)
 	 			if (distancias_original[j][i]!=0)
@@ -50,13 +50,13 @@ main(){
 
 
 	//mostrar matriz
-	for(int i = 0; i<n;i++)
+	for(int i = 0; i<numero_equipos;i++)
 	{
 	 	cout<<endl;
-	 	for(int j = 0; j<n;j++)
+	 	for(int j = 0; j<numero_equipos;j++)
 	 	{
 	 		cout<<distancias[i][j];
-	 		if(j<n-1)
+	 		if(j<numero_equipos-1)
 	 			cout<<" - ";
 	 	}
 	 	cout<< endl;
@@ -65,18 +65,18 @@ main(){
 
 
 	//desplazamientos
-	int disponibilidad[n];//para ver si puede viajar en la fecha o si ya lo hizo-- valores de 0 o 1
-	for(int i=0; i<n; i++){
+	int disponibilidad[numero_equipos];//para ver si puede viajar en la fecha o si ya lo hizo-- valores de 0 o 1
+	for(int i=0; i<numero_equipos; i++){
 		disponibilidad[i]=1;
 	}
 
-	int posicion_actual[6];//para saber posicion actual de equipo; cambia
-	for(int i=0; i<n; i++){//cada equipo en su estadio inicialmente
+	int posicion_actual[numero_equipos];//para saber posicion actual de equipo; cambia
+	for(int i=0; i<numero_equipos; i++){//cada equipo en su estadio inicialmente
 		posicion_actual[i]=i+1;//---- guarda valores desde 1 (no el 0)
 	}
 
-	int posicion_original[n];//para guardar posicion en donde estaba antes de fecha---------------------------------
-	for(int i=0; i<n; i++){//cada equipo en su estadio inicialmente
+	int posicion_original[numero_equipos];//para guardar posicion en donde estaba antes de fecha---------------------------------
+	for(int i=0; i<numero_equipos; i++){//cada equipo en su estadio inicialmente
 		posicion_original[i]=i+1;//---- guarda valores desde 1 (no el 0)
 	}
 
@@ -88,7 +88,12 @@ main(){
 	int numero_fecha=0;//variable para imprimir numero de fecha correspondiente
 	int numero_f=0;//aux para variable numero_fecha
 
-	for(int m=0; m<2*(n -1)+1; m++)//for para repetir cosas hasta completar fechas= 2*(numero_equipos - 1),  +1 para asegurar todos los partidos
+	float n = numero_equipos;
+	int n_partidos= numero_equipos*numero_equipos - numero_equipos;
+	int x=2*(numero_equipos-1);
+
+	InicioCalculoFechas:
+	for(int m=0; m< x; m++)//for para repetir cosas hasta completar fechas= 2*(numero_equipos - 1),  +1 para asegurar todos los partidos
 	{
 		for(int z=0; z< n/2; z++)//se repite hasta completar una fecha; numero_equipos/2  por fecha
 		{	
@@ -154,6 +159,7 @@ main(){
 			if(posicion_actual[k]!=posicion_original[k])
 			{
 				cout<<"Local: "<< posicion_actual[k] <<" - Visitante: "<< k+1 <<endl;
+				n_partidos--;
 			}
 		}
 		numero_fecha++;
@@ -180,6 +186,7 @@ main(){
 			}
 		}
 
+
 		//mostrar matriz
 		for(int i = 0; i<n;i++)
 		{
@@ -196,6 +203,14 @@ main(){
 		cout<<endl;
 		cout<<endl;
 	}
+
+
+	cout<<endl<<"hola?"<<endl;
+	if(n_partidos!=0){
+		x=1;
+		goto InicioCalculoFechas;
+	}
+
 
 
 	return 0;
