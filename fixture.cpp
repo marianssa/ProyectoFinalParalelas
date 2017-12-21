@@ -21,7 +21,7 @@ struct nodo
 };
 typedef nodo*lista;
 
-void mostrar(lista l)//se puede modificar esta funcion para recorrer la lista tambien
+void mostrarlista(lista l)//se puede modificar esta funcion para recorrer la lista tambien
 {
 	lista p = NULL;
 	p=l;
@@ -35,6 +35,20 @@ void mostrar(lista l)//se puede modificar esta funcion para recorrer la lista ta
 		cout<<"longitud "<<p->longitud<<endl;
 		p=p->link;
 		cout<<endl;
+	}
+}
+
+void mostrarMatriz(float **matriz,int numero_de_equipos){
+	for(int i = 0; i<numero_de_equipos;i++)
+	{
+	 	cout<<endl;
+	 	for(int j = 0; j<numero_de_equipos;j++)
+	 	{
+	 		cout<<matriz[i][j];
+	 		if(j<numero_de_equipos-1)
+	 			cout<<" - ";
+	 	}
+	 	cout<< endl;
 	}
 }
 
@@ -91,7 +105,7 @@ void guardar(string fichero,lista &l)
 } 
 
 
-double calcularDistancia(double lat1,double lat2,double long1,double long2){       
+double calcularDistancia(double lat1,double lat2,double long1,double long2){
         double PI = 4.0*atan(1.0);
         
         //Formula Haversine --> Radio ecuatorial = 6378km
@@ -113,6 +127,7 @@ double calcularDistancia(double lat1,double lat2,double long1,double long2){
         return distancia;
 }
 
+
 int contadorlineas(string mifichero)
 {
 	fstream miarchivo;
@@ -128,7 +143,7 @@ int contadorlineas(string mifichero)
 void llenadomatriz(float **matriz,lista l,int n)
 {
 
-	lista t,q;
+	lista q,t;
 	t=l;
 
 	float latitud1,
@@ -160,29 +175,218 @@ void llenadomatriz(float **matriz,lista l,int n)
 int main()
 {
 	 lista l;
-	 int numero_de_equipos;
-	 numero_de_equipos=contadorlineas("datos");
+	 int numero_equipos;
+	 numero_equipos=contadorlineas("datos");
 	 guardar("datos",l);
-	 float matrizequipos[numero_de_equipos][numero_de_equipos];
-	 mostrar(l);
+	 float matrizequipos[numero_equipos][numero_equipos];
+	 mostrarlista(l);
 	 cout << endl;
 
 	//puntero de punteros para problema de envio de matriz con tamaño dinamico
-	float *array[numero_de_equipos];
-	for(size_t w=0;w<numero_de_equipos; w++){
+	float *array[numero_equipos];
+	for(size_t w=0;w<numero_equipos; w++){
 		array[w]=matrizequipos[w];
 	}
 
 
-	 llenadomatriz(array,l,numero_de_equipos);
-	 for(int i = 0; i<numero_de_equipos;i++)
-	 {
-	 	cout<<endl;
-	 	for(int j = 0; j<numero_de_equipos;j++)
-	 	{
-	 		cout<<matrizequipos[i][j]<<"-";
-	 	}
-	 }
+	 llenadomatriz(array,l,numero_equipos);
+	 mostrarMatriz(array, numero_equipos);
 
-	 //cout<<numero_de_equipos;
+
+
+
+
+
+// matriz equipos =>	int distancias_original[numero_equipos][numero_equipos];//matriz de distancias original, que no cambia
+	float distancias[numero_equipos][numero_equipos];//matriz de distancias, cambia con los calculos de fechas
+
+	//llenar con 0
+	for(int i = 0; i<numero_equipos;i++)
+	{
+	 	cout<<endl;
+	 	for(int j = 0; j<numero_equipos;j++)
+	 	{
+	 		distancias[i][j]=0;
+	 	}
+	}
+
+	//termina llenado matriz
+	for(int i = 0; i<numero_equipos;i++)
+	{
+	 	for(int j = 0; j<numero_equipos;j++)
+	 	{
+	 		if(i!=j)
+	 			if (matrizequipos[j][i]!=0)
+	 			{
+	 				distancias[i][j]= matrizequipos[j][i];
+	 				distancias[j][i]= matrizequipos[j][i];
+	 			}
+	 	}
+	}
+
+
+
+	//mostrar matriz
+	for(int i = 0; i<numero_equipos;i++)
+	{
+	 	cout<<endl;
+	 	for(int j = 0; j<numero_equipos;j++)
+	 	{
+	 		cout<<distancias[i][j];
+	 		if(j<numero_equipos-1)
+	 			cout<<" - ";
+	 	}
+	 	cout<< endl;
+	}
+
+
+
+	//desplazamientos
+	int disponibilidad[numero_equipos];//para ver si puede viajar en la fecha o si ya lo hizo-- valores de 0 o 1
+	for(int i=0; i<numero_equipos; i++){
+		disponibilidad[i]=1;
+	}
+
+	int posicion_actual[numero_equipos];//para saber posicion actual de equipo; cambia
+	for(int i=0; i<numero_equipos; i++){//cada equipo en su estadio inicialmente
+		posicion_actual[i]=i+1;//---- guarda valores desde 1 (no el 0)
+	}
+
+	int posicion_original[numero_equipos];//para guardar posicion en donde estaba antes de fecha---------------------------------
+	for(int i=0; i<numero_equipos; i++){//cada equipo en su estadio inicialmente
+		posicion_original[i]=i+1;//---- guarda valores desde 1 (no el 0)
+	}
+
+
+
+
+	int min=999999999;//para encontrar menor distancia en matriz distancia
+	int fila, columna;//auxiliares para guardar posicion del menor encontrado
+	int numero_fecha=0;//variable para imprimir numero de fecha correspondiente
+	int numero_f=0;//aux para variable numero_fecha
+
+	float n = numero_equipos;
+	int n_partidos= numero_equipos*numero_equipos - numero_equipos;
+	int x=2*(numero_equipos-1);
+
+	InicioCalculoFechas:
+	for(int m=0; m< x; m++)//for para repetir cosas hasta completar fechas= 2*(numero_equipos - 1),  +1 para asegurar todos los partidos
+	{
+		for(int z=0; z< n/2; z++)//se repite hasta completar una fecha; numero_equipos/2  por fecha
+		{	
+			for(int i=0; i<n; i++){//recorrer matriz distancia para encontrar menor
+				for(int j=0; j<n; j++){
+					if(i!=j){
+						if(distancias[j][i]>0)
+						{
+							if(disponibilidad[i]==1 && disponibilidad[j]==1)
+							{
+								if(distancias[j][i]<min){
+									min=distancias[j][i];
+									fila=i;
+									columna=j;
+								}
+							}
+						}
+					}	
+				}
+			}
+			
+//			cout<<"ciudad : "<<columna+1<<" viaja a ciudad "<<fila+1<<" recorriendo "<<min<<" km."<<endl;//---------------------
+			
+			posicion_actual[columna]=fila+1;//asigna posicion del visitante por la del local	
+/*			cout<< "Posiciones : ";//------------------------------------------------------------------------------------------
+			for(int i=0; i<n; i++)
+				cout <<" c"<<i+1<<"= "<<posicion_actual[i];
+			cout<<endl;*/
+
+			disponibilidad[fila]=0; //declara indisponible a este equipo para poder viajar o recibir visita
+			disponibilidad[columna]=0; //declara indisponible a este equipo para poder viajar o recibir visita
+/*			cout<< "Disponibilidad : ";//--------------------------------------------------------------------------------------
+			for(int i=0; i<n; i++)
+				cout <<" c"<<i+1<<"= "<<disponibilidad[i];
+			cout<<endl;*/
+
+
+			distancias[columna][fila]=-1;
+/*			//mostrar matriz
+			for(int i = 0; i<n;i++)
+			{
+			 	cout<<endl;
+			 	for(int j = 0; j<n;j++)
+			 	{
+			 		cout<<distancias[i][j];
+			 		if(j<n-1)
+			 			cout<<" - ";
+			 	}
+			 	cout<< endl;
+			}*/
+			min=999999999;//reset de min para poder volver a buscar un nuevo minimo
+		}
+		//Termina 1 fecha
+		for(int i=0; i<n; i++)//todos disponibles otra vez para poder viajar o recibir visitas 
+		{
+			disponibilidad[i]=1;
+		}
+
+		//fechas
+		numero_f=numero_fecha;
+		cout<<"Fecha: "<<numero_f+1<<endl;
+		for(int k=0;k<n;k++){// imprime la cantidad de veces que hay por fecha; --------------------- 
+			if(posicion_actual[k]!=posicion_original[k])
+			{
+				cout<<"Local: "<< posicion_actual[k] <<" - Visitante: "<< k+1 <<endl;
+				n_partidos--;
+			}
+		}
+		numero_fecha++;
+
+//		cout<<"Posiciones finales por fecha: ";
+		for(int h=0; h<n; h++){//asigna posicion actual como la siguiente posicion original
+			posicion_original[h]=posicion_actual[h];//---- guarda valores desde 1 (no el 0)
+		//	cout<< posicion_actual[h]<<", ";
+		}
+
+
+		for(int i=0; i<n; i++)
+		{
+			for(int j=0; j<n; j++)
+			{
+				if(i!=j)
+				{
+					if(distancias[i][j]>0)
+					{
+						distancias[i][j]=matrizequipos[posicion_actual[i]-1][j];
+					}
+				}
+
+			}
+		}
+
+
+/*		//mostrar matriz
+		for(int i = 0; i<n;i++)
+		{
+			cout<<endl;
+			for(int j = 0; j<n;j++)
+			{
+				cout<<distancias[i][j];
+				if(j<n-1)
+					cout<<" - ";
+			}
+			cout<< endl;
+		}*/
+
+		cout<<endl;
+		cout<<endl;
+	}
+
+
+	if(n_partidos!=0){
+		x=1;
+		goto InicioCalculoFechas;
+	}
+
+
+
 }
